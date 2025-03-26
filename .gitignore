@@ -134,3 +134,7 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+svg2apng/node_modules
+svg2apng/frames_tmp/frame*
+

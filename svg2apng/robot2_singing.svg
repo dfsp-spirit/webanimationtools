@@ -1,0 +1,246 @@
+<svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+    <script type="application/ecmascript">
+        <![CDATA[
+        function stepAnimation() {
+            document.documentElement.setCurrentTime(document.documentElement.getCurrentTime() + 1/30);
+        }
+        ]]>
+    </script>
+    <!-- Singing Robot -->
+    <g transform="translate(100, 100)">
+        <g id="robotHead">
+            <!-- Head swaying slightly -->
+            <animateTransform attributeType="XML" attributeName="transform" type="rotate"
+                values="-1,40,160; 1,40,160; -1,40,160" dur="2s" repeatCount="indefinite" />
+            <!-- Main part pof the head -->
+            <rect x="20" y="0" width="80" height="60" rx="10" ry="10" fill="rgb(172, 225, 217)"
+                stroke="black" stroke-width="2" /> <!-- Main part of the head -->
+            <!-- Ears -->
+            <circle cx="15" cy="20" r="5" fill="rgb(242, 210, 151)" stroke="black" stroke-width="2" /> <!--
+            Left ear -->
+            <circle cx="105" cy="20" r="5" fill="rgb(242, 210, 151)" stroke="black" stroke-width="2" /> <!--
+            Right ear -->
+            <!-- Antennas -->
+            <g id="leftEarAntenna">
+                <animateTransform attributeType="XML" attributeName="transform" type="rotate"
+                    values="-5,15,10; 5,15,10; -5,15,10" dur="2s" repeatCount="indefinite" />
+                <line x1="15" y1="15" x2="10" y2="-10" stroke="black" stroke-width="2" /> <!-- Left
+                antenna -->
+                <circle cx="10" cy="-10" r="2" fill="gray" stroke="black" stroke-width="2" /> <!--
+                Left sphere -->
+            </g>
+            <g id="rightEarAntenna">
+                <animateTransform attributeType="XML" attributeName="transform" type="rotate"
+                    values="5,105,15; -5,105,15; 5,105,15" dur="2s" repeatCount="indefinite" />
+                <line x1="105" y1="15" x2="110" y2="-10" stroke="black" stroke-width="2" /> <!--
+                Right
+                antenna -->
+                <circle cx="110" cy="-10" r="2" fill="gray" stroke="black" stroke-width="2" /> <!--
+                Right sphere -->
+            </g>
+            <circle cx="45" cy="20" r="7" fill="white" stroke="black" stroke-width="2" /> <!-- Left
+            eye -->
+            <circle cx="75" cy="20" r="5" fill="white" stroke="black" stroke-width="2" /> <!-- Right
+            eye -->
+            <!-- Mouth opening and closing -->
+            <!-- New Mouth: Warping Ellipse -->
+            <ellipse id="robotMouth" cx="60" cy="40" rx="12" ry="8" fill="rgb(230, 230, 230)"
+                stroke="black" stroke-width="2">
+                <animate attributeName="ry" dur="0.5s" repeatCount="indefinite" values="5;8;5" />
+            </ellipse>
+            <circle cx="60" cy="25" r="2" fill="black" /> <!-- Nose -->
+            <rect x="50" y="60" width="20" height="15" rx="2" ry="2" fill="rgb(190, 200, 230)"
+                stroke="black" stroke-width="2" /> <!-- Neck -->
+        </g>
+        <g id="robotCenter">
+            <!-- Left arm swinging slightly -->
+            <g id="leftArm" transform="rotate(-5,10,85)">
+                <animateTransform attributeType="XML" attributeName="transform" type="rotate"
+                    values="-3,10,85; 3,10,85; -3,10,85" dur="2s" repeatCount="indefinite" />
+                <rect x="10" y="85" width="10" height="10" rx="2" ry="2" fill="rgb(190, 200, 230)"
+                    stroke="black" stroke-width="1" />
+                <rect x="-5" y="80" width="20" height="20" rx="5" ry="5" fill="rgb(242, 210, 151)"
+                    stroke="black" stroke-width="2" />
+                <rect x="0" y="100" width="10" height="30" rx="2" ry="2" fill="rgb(190, 200, 230)"
+                    stroke="black" stroke-width="1" />
+                <g id="leftHand">
+                    <!-- Left hand fingers -->
+                    <g id="leftHandleftFinger">
+                        <g id="leftHandLeftFingerLowerPart">
+                            <animateTransform attributeType="XML" attributeName="transform"
+                                type="rotate" values="4,-2,142; -8,-2,142; 4,-2,142" dur="2s"
+                                begin="0s" repeatCount="indefinite" fill="freeze" />
+                            <line x1="-2" y1="142" x2="2" y2="155" stroke="gray" stroke-width="5" /> <!--
+                    Left hand left finger lower part -->
+                            <circle cx="2" cy="155" r="2" fill="rgb(242, 210, 151)" stroke="black"
+                                stroke-width="1" /> <!-- Fingertip of left finger of the left hand -->
+                        </g>
+                        <g id="leftHandLeftFingerUpperPart">
+                            <animateTransform attributeType="XML" attributeName="transform"
+                                type="rotate" values="4,2,135; -8,2,135; 4,2,135" dur="2s"
+                                begin="0s" repeatCount="indefinite" fill="freeze" />
+                            <line x1="2" y1="135" x2="-2" y2="145" stroke="gray" stroke-width="5" /> <!--
+                    Left hand left finger upper part -->
+                            <circle cx="-2" cy="145" r="3" fill="rgb(242, 210, 151)" stroke="black"
+                                stroke-width="1" /> <!-- Small circle as joint between parts of left
+                    finger of the left hand -->
+                        </g>
+                    </g>
+
+                    <g id="leftHandRightFinger">
+                        <g id="leftHandRightFingerLowerPart">
+                            <animateTransform attributeType="XML" attributeName="transform"
+                                type="rotate" values="-4,12,142; 8,12,142; -4,12,142" dur="2s"
+                                begin="0s" repeatCount="indefinite" fill="freeze" />
+                            <line x1="12" y1="142" x2="8" y2="155" stroke="gray" stroke-width="5" /> <!--
+                    Left hand right finger lower part -->
+                            <circle cx="8" cy="155" r="2" fill="rgb(242, 210, 151)" stroke="black"
+                                stroke-width="1" /> <!-- Fingertip of right finger of the left hand -->
+                        </g>
+                        <g id="leftHandRightFingerUpperPart">
+                            <animateTransform attributeType="XML" attributeName="transform"
+                                type="rotate" values="-4,8,135; 8,8,135; -4,8,135" dur="2s"
+                                begin="0s" repeatCount="indefinite" fill="freeze" />
+                            <line x1="8" y1="135" x2="12" y2="145" stroke="gray" stroke-width="5" /> <!--
+                    Left hand right finger upper part -->
+                            <circle cx="12" cy="145" r="3" fill="rgb(242, 210, 151)" stroke="black"
+                                stroke-width="1" /> <!-- Small circle as joint between parts of right
+                    finger of the left hand -->
+                        </g>
+                    </g>
+
+                    <circle cx="5" cy="130" r="10" fill="rgb(242, 210, 151)" stroke="black"
+                        stroke-width="2" /> <!-- The main part of the left hand, where fingers are
+            attached -->
+                </g>
+            </g>
+            <!-- Right arm swinging slightly -->
+            <g id="rightArm" transform="rotate(5,100,85)">
+                <animateTransform attributeType="XML" attributeName="transform" type="rotate"
+                    values="3,100,85; -3,100,85; 3,100,85" dur="2s" repeatCount="indefinite" />
+                <rect x="100" y="85" width="10" height="10" rx="2" ry="2" fill="rgb(190, 200, 230)"
+                    stroke="black" stroke-width="1" />
+                <rect x="105" y="80" width="20" height="20" rx="5" ry="5" fill="rgb(242, 210, 151)"
+                    stroke="black" stroke-width="2" />
+                <rect x="110" y="100" width="10" height="30" rx="2" ry="2" fill="rgb(190, 200, 230)"
+                    stroke="black" stroke-width="1" />
+                <g id="rightHand">
+                    <!-- right hand fingers -->
+                    <g id="rightHandleftFinger">
+                        <g id="rightHandLeftFingerLowerPart">
+                            <line x1="108" y1="142" x2="112" y2="155" stroke="gray" stroke-width="5" /> <!--
+                    Right hand left finger lower part -->
+                            <circle cx="112" cy="155" r="2" fill="rgb(242, 210, 151)" stroke="black"
+                                stroke-width="1" /> <!-- Fingertip of left finger of the right hand -->
+                        </g>
+                        <g id="rightHandLeftFingerUpperPart">
+                            <line x1="112" y1="135" x2="108" y2="145" stroke="gray" stroke-width="5" /> <!--
+                    Right hand left finger upper part -->
+                            <circle cx="108" cy="145" r="3" fill="rgb(242, 210, 151)" stroke="black"
+                                stroke-width="1" /> <!-- Small circle as joint between parts of left
+                    finger of the right hand -->
+                        </g>
+                    </g>
+
+                    <g id="rightHandRightFinger">
+                        <g id="rightHandRightFingerLowerPart">
+                            <line x1="122" y1="142" x2="118" y2="155" stroke="gray" stroke-width="5" /> <!--
+                    Right hand right finger lower part -->
+                            <circle cx="118" cy="155" r="2" fill="rgb(242, 210, 151)" stroke="black"
+                                stroke-width="1" /> <!-- Fingertip of right finger of the right hand -->
+                        </g>
+                        <g id="rightHandRightFingerUpperPart">
+                            <line x1="118" y1="135" x2="122" y2="145" stroke="gray" stroke-width="5" /> <!--
+                    Right hand right finger upper part -->
+                            <circle cx="122" cy="145" r="3" fill="rgb(242, 210, 151)" stroke="black"
+                                stroke-width="1" /> <!-- Small circle as joint between parts of right
+                    finger of the right hand -->
+                        </g>
+                    </g>
+
+                    <!-- Sphere as hand. Drawn after fingers for z order. -->
+                    <circle cx="115" cy="130" r="10" fill="rgb(242, 210, 151)" stroke="black"
+                        stroke-width="2" /> <!-- Right hand main part where fingers are attached -->
+                </g>
+            </g>
+            <g id="robotTorso">
+                <rect x="50" y="130" width="20" height="60" rx="5" ry="5" fill="rgb(172, 225, 217)"
+                    stroke="black" stroke-width="2" /> <!-- lower part where legs are attached -->
+
+                <g id="stomach">
+                    <rect x="30" y="110" width="60" height="60" rx="10" ry="10"
+                        fill="rgb(172, 225, 217)" stroke="black" stroke-width="2" />  <!-- middle part
+            of torso: stomach -->
+                    <rect x="40" y="138" width="40" height="4" rx="2" ry="2"
+                        fill="rgb(242, 210, 151)" stroke="black" stroke-width="1" /> <!-- upper
+            decorative rectangle on stomach -->
+                    <rect x="40" y="148" width="40" height="4" rx="2" ry="2"
+                        fill="rgb(242, 210, 151)" stroke="black" stroke-width="1" /> <!-- central
+            decorative rectangle on stomach -->
+                    <rect x="40" y="158" width="40" height="4" rx="2" ry="2"
+                        fill="rgb(242, 210, 151)" stroke="black" stroke-width="1" /> <!-- lower
+            decorative rectangle on stomach -->
+                </g>
+
+                <g id="chest">
+                    <animateTransform attributeType="XML" attributeName="transform" type="translate"
+                        values="0,0; 0,-1; 0,0" dur="1s" repeatCount="indefinite" /> <!-- animation:
+            move torso up and down a bit while singing -->
+                    <rect x="20" y="70" width="80" height="60" rx="10" ry="10"
+                        fill="rgb(172, 225, 217)" stroke="black" stroke-width="2" /> <!-- upper part
+            of torso: chest -->
+                    <rect x="70" y="80" width="20" height="10" rx="2" ry="2"
+                        fill="rgb(242, 210, 151)" stroke="black" stroke-width="1" /> <!-- decorative
+            rectangle on the upper right part of the torso -->
+                    <circle cx="30" cy="120" r="3" fill="rgb(242, 210, 151)" stroke="black"
+                        stroke-width="1" /> <!-- small screw in lower left corner of the upper torso -->
+                    <circle cx="90" cy="120" r="3" fill="rgb(242, 210, 151)" stroke="black"
+                        stroke-width="1" /> <!-- small screw in lower right corner of the upper torso -->
+                </g>
+            </g>
+        </g>
+
+
+        <g id="robotLegs">
+            <g id="leftLeg">
+                <circle cx="40" cy="180" r="10" fill="rgb(242, 210, 151)" stroke="black"
+                    stroke-width="2" /> <!-- Left sphere -->
+                <rect x="35" y="190" width="10" height="15" rx="2" ry="2"
+                    fill="rgb(190, 200, 230)" stroke="black" stroke-width="1" /> <!-- Left upper
+                    leg -->
+                <g id="leftLowerLeg">
+                    <circle cx="40" cy="205" r="8" fill="rgb(242, 210, 151)" stroke="black"
+                        stroke-width="2" /> <!-- Left knee -->
+                    <rect x="32" y="212" width="15" height="20" rx="2" ry="2"
+                        fill="rgb(172, 225, 217)" stroke="black" stroke-width="2" /> <!-- Left
+                        foot -->
+                    <rect x="28" y="230" width="22" height="10" rx="5" ry="5" fill="gray"
+                        stroke="black" stroke-width="2" /> <!-- Left foot -->
+                </g>
+            </g>
+            <g id="rightLeg">
+                <circle cx="80" cy="180" r="10" fill="rgb(242, 210, 151)" stroke="black"
+                    stroke-width="2" /> <!-- Right sphere -->
+                <rect x="75" y="190" width="10" height="15" rx="2" ry="2"
+                    fill="rgb(190, 200, 230)" stroke="black" stroke-width="1" /> <!-- Right upper
+                    leg -->
+                <g id="rightLowerLeg">
+                    <animateTransform attributeType="XML" attributeName="transform"
+                        type="translate" values="0,0; 0,-2; 0,0" dur="1s"
+                        repeatCount="indefinite" /> <!-- animation of lower leg slowly moving a
+                        tiny bit up and down -->
+                    <circle cx="80" cy="205" r="8" fill="rgb(242, 210, 151)" stroke="black"
+                        stroke-width="2" /> <!-- Right knee -->
+                    <rect x="73" y="212" width="15" height="20" rx="2" ry="2"
+                        fill="rgb(172, 225, 217)" stroke="black" stroke-width="2" /> <!-- Right
+                        foot -->
+                    <rect x="70" y="230" width="22" height="10" rx="5" ry="5" fill="gray"
+                        stroke="black" stroke-width="2" /> <!-- Right foot -->
+                </g>
+            </g>
+        </g>
+
+    </g>
+
+
+</svg>
