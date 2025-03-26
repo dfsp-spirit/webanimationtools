@@ -136,6 +136,7 @@ rm -f ./frames_tmp/frame_*.png
 # Convert the animated SVG to a sequence of PNG frames
 node anim_svg_to_png_frames.js --numframes $numframes --delay $delay --svgfile "$input_file" --outputdir "./frames_tmp"
 ./png_frames_to_apng.bash --framerate $framerate --outputfile "${output_file}" --inputdir "./frames_tmp"
+rm -rf ./frames_tmp/frame_*.png
 
 
 generate_html() {
