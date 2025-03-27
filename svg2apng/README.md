@@ -1,7 +1,7 @@
 # Graphics -- Creating an animated PNG image from an animated SVG
 
 
-![Animated Robot in PNG format](./robot_a.png)
+![Animated Robot in PNG format](../images/robot_a.png)
 
 
 The tools in this directory convert an animated SVG file to an animated PNG file.
