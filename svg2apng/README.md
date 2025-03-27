@@ -49,6 +49,8 @@ The `run.bash` script internally runs two other scripts. It should not be needed
 * Delete the frames to avoid potential issues next time you use the scripts: ```rm frame_*.png```
 
 
-The ffmpeg script creates an output file named `animated.png` by default (if `--outputfile` was not used). Make sure to view this APNG file in a suitable application, like Firefox or Chrome. Software like MS Paint that does not support APNG will not display the animation, and typically displays only the first frame.
+The ffmpeg script creates an output file named `animated.png` by default (if `--outputfile` was not used). Make sure to view this APNG file in a suitable application, like Firefox or Chrome.
+
+Note: Software like MS Paint that does not support APNG will not display the animation, and typically shows only the first frame.
 
 
