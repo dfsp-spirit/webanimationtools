@@ -9,43 +9,46 @@ The tools in this directory convert an animated SVG file to an animated PNG file
 This is a two-step process:
 
 * First, a small node script that generates PNG frames from an animated SVG.
+    - Technically this is achieved via puppeteer, via taking 'screenshots' of the animation running in a headless (no visible UI) browser.
 * Then, ffmpeg is used to encode these frames to a animated PNG (APNG) file.
 
-This can be used under Linux, and with some extra effort under Windows (if you have a proper shell like the MINGW bash that comes with Git for Windows).
+The software in this repo can be used under Linux and MacOS, and with a bit of an extra effort under Windows as well (if you have a bash shell, like the MINGW bash that comes with Git for Windows).
 
 ## Installation
 
-* Make sure you have `npm` installed, if not get the LTS from the [node website](https://nodejs.org/) or from your package manager. I used v10.9.2.
-* Make sure you have `ffmpeg` installed and on your PATH. Under Linux you most likely already have it, otherwise install from your package manager. Under Windows you could use chocolate to install it, or manually install a Windows build from the [ffmpeg website](https://www.ffmpeg.org/).
-* Install JavaScript dependencies via npm. In this directory: ```npm ci```
+* Make sure you have `npm` installed, if not get the LTS from the [node website](https://nodejs.org/) or from your package manager on a recent distribution. I used v10.9.2.
+* Make sure you have `ffmpeg` installed and on your PATH.
+   - Under Linux you most likely already have it, otherwise install from your package manager (Debian/Ubuntu `sudo apt install ffmpeg`).
+   - Under Windows you could use chocolate to install it, or manually install a Windows build from the [ffmpeg website](https://www.ffmpeg.org/).
+   - Under MacOS Homebrew is most likely your best option, or check the [ffmpeg website](https://www.ffmpeg.org/).
+* Install JavaScript dependencies via npm. In this directory, run: ```npm ci```
+
 
 ## Usage
 
-Name the SVG file you want to convert `robot.svg` and embed the JS function from the example robot.svg file at the top. Your SVG should start like this if you open it in a text editor:
+Have your svg file ready and run the `run.bash` wrapper script to carry out the full conversion. Typical usage:
 
+```shell
+./run.bash --outputfile out.png input.svg
 ```
-<svg width="800" height="400" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
-    <script type="application/ecmascript">
-        <![CDATA[
-        function stepAnimation() {
-            document.documentElement.setCurrentTime(document.documentElement.getCurrentTime() + 1/30);
-        }
-        ]]>
-    </script>
-  // more SVG content here
-```
+
+Run `./run.bash --help` to see available options for changing screenshot capture rate and dealy, as well as output frames per second for the APNG file. You **will** need to tweak those depending on the length of the animation to get good results.
+
+
+### Manually running the sub scripts
+
+The `run.bash` script internally runs two other scripts. It should not be needed to interact with them directly, but if you feel like it, here is how to do it:
+
 
 * Run the first script: ```node anim_svg_to_png_frames.js```
     - This generates the frames (a set of non-animated PNG files named `frame_IDX.png`, where `IDX` is a running index)
+    - Run with `--help` to see available options.
 * Run the ffmpeg script: ```./png_frames_to_apng.bash```
     - This combines all PNG frames into a single APNG file named `animated.png`
+    - Run with `--help` to see available options.
 * Delete the frames to avoid potential issues next time you use the scripts: ```rm frame_*.png```
 
 
-The ffmpeg script creates an output file named `animated.png`. Make sure to view this APNG file in a suitable application, like Firefox or Chrome. Software like MS Paint that does not support APNG will not display the animation, but only the first frame.
+The ffmpeg script creates an output file named `animated.png` by default (if `--outputfile` was not used). Make sure to view this APNG file in a suitable application, like Firefox or Chrome. Software like MS Paint that does not support APNG will not display the animation, and typically displays only the first frame.
 
-### Customization
-
-* You can adapt the number of frames to capture and the delay between frames in ms when running the script node `anim_svg_to_png_frames.js`. Run it with argument `--help` to see details.
-* You can adapt the output framerate of the APNG file. To do that, pass it as first command line argument to the `png_frames_to_apng.bash` script, e.g.: ```./png_frames_to_apng.bash --framerate 5``` for five frames per second. Run it with argument `--help` to see details.
 
