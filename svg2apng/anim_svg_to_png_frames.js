@@ -20,8 +20,110 @@ const fs = require('fs');
 // Default values
 let numFrames = 20;
 let delay = 100;
-let svgFile = 'file://' + path.join(__dirname, 'robot.svg');
+let svgFile = 'robot.svg';
 let outputDir = path.join(__dirname, 'frames_tmp');
+
+
+
+// The JS script to embed at the top of the SVG files.
+const scriptToInsert = `<script type="application/ecmascript">
+        <![CDATA[
+        function stepAnimation() {
+            document.documentElement.setCurrentTime(document.documentElement.getCurrentTime() + 1/30);
+        }
+        ]]>
+    </script>`;
+
+
+// Function to embed the script into a single SVG file
+function embedJsIntoSvgFile(filePath) {
+    try {
+        // Read the file content
+        let content = fs.readFileSync(filePath, 'utf8');
+
+        // Check if the function already exists in any script tag
+        const functionExists = /<script[^>]*>[\s\S]*?\bfunction\s+stepAnimation\s*\([^)]*\)[\s\S]*?<\/script>/i.test(content);
+
+        if (!functionExists) {
+            // Find the opening SVG tag (may span multiple lines and have attributes)
+            const svgTagRegex = /<svg[\s\S]*?>/i;
+            const svgTagMatch = content.match(svgTagRegex);
+
+            if (svgTagMatch) {
+                const svgTag = svgTagMatch[0];
+                // Insert the script right after the SVG opening tag
+                const newContent = content.replace(svgTag, `${svgTag}\n${scriptToInsert}`);
+
+                // Write the modified content back to the file
+                fs.writeFileSync(filePath, newContent, 'utf8');
+                console.log(`Updated: ${filePath}`);
+            } else {
+                console.log(`No SVG tag found in: ${filePath}`);
+            }
+        } else {
+            console.log(`Function already exists, skipping: ${filePath}`);
+        }
+    } catch (err) {
+        console.error(`Error processing ${filePath}:`, err.message);
+    }
+}
+
+/**
+ * Creates a backup of a file by copying it to [filename].backup
+ * @param {string} filePath - Path to the original file
+ * @returns {object} { success: boolean, message: string, backupPath: string }
+ */
+function createBackup(filePath, allowOverwrite = true) {
+    try {
+        const backupPath = `${filePath}.backup`;
+
+        // Check if original file exists
+        if (!fs.existsSync(filePath)) {
+            return {
+                success: false,
+                message: `Original file not found: ${filePath}`,
+                backupPath: null
+            };
+        }
+
+        // Check if backup already exists to avoid overwriting
+        if (fs.existsSync(backupPath)) {
+            if(! allowOverwrite) {
+                return {
+                    success: false,
+                    message: `Backup already exists and allowOverwrite is false: ${backupPath}`,
+                    backupPath: null
+                };
+            } else {
+                // Delete existing backup
+                fs.unlinkSync(backupPath);
+            }
+        }
+
+        // Create backup (using copyFileSync for atomic operation)
+        fs.copyFileSync(filePath, backupPath);
+
+        return {
+            success: true,
+            message: `Backup created: ${backupPath}`,
+            backupPath: backupPath
+        };
+    } catch (err) {
+        return {
+            success: false,
+            message: `Backup failed for ${filePath}: ${err.message}`,
+            backupPath: null
+        };
+    }
+}
+
+// Restore a file with a .backup extension to its original state.
+function restoreFromBackup(backupPath) {
+    const originalPath = backupPath.replace(/\.backup$/, '');
+    fs.copyFileSync(backupPath, originalPath);
+    console.log(`Restored ${originalPath} from backup`);
+}
+
 
 // Parse command-line arguments
 process.argv.forEach((arg, index) => {
@@ -57,6 +159,17 @@ if (!fs.existsSync(outputDir)) {
     process.exit(1); // Exit with an error code
 }
 
+const backupResult = createBackup(svgFile.replace('file://', ''));
+if (!backupResult.success) {
+    console.error(`Aborted due to failure while trying to create backup of input SVG file: ${backupResult.message}`);
+    process.exit(1);
+}
+
+const backupPath = backupResult.backupPath;
+
+embedJsIntoSvgFile(svgFile.replace('file://', ''));
+console.log('SVG file updated with animation script.');
+
 (async () => {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
@@ -86,3 +199,7 @@ if (!fs.existsSync(outputDir)) {
     await browser.close();
     console.log('All', numFrames, 'Frames captured!');
 })();
+
+// Restore the original SVG file
+restoreFromBackup(backupPath);
+console.log('Done converting SVG to PNG frames for input file:', svgFile);

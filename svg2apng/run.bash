@@ -30,7 +30,8 @@ show_help() {
     echo "This script requires ffmpeg and node to be installed and available on the system path."
     echo "* --numframes: The number of frames to capture from the input SVG animation. Positive integer, defaults to 10."
     echo "* --delay: The delay between frames when capturing screenshots from the input SVG animation. Positive integer (in ms), defaults to 100."
-    echo "* --outputfile: The name of the output APNG file. Defaults to the name of the input file with the file extension '.svg replaced by '.png'."
+    echo "* --outputfile: The name of the output APNG file. Defaults to the name of the input file with the file extension '.svg replaced by '.png'. If you change the output directory with this and want to use the html file, make sure to adapt that to the same directory."
+    echo "* --htmlfile: The name of a convencience output HTML file that displays the output APNG for quick checks in a browser. Defaults to the name of the input file with the file extension '.svg replaced by '.html' If set manually, you must ensure this file is in the same directory as the output PNG file."
     echo "* --framerate: The number of frames per second in the output animation. Positive integer, defaults to 10."
     echo "* --help: Show this help message and exit."
     echo "* inputfile.svg: The input animated SVG file to be converted to an animated PNG. Required. Must have file extension '.svg' unless --outputfile is specified."
@@ -175,7 +176,10 @@ generate_html() {
 EOF
 }
 
-generate_html "${html_file}" "${output_file}" "Displaying file '${output_file}' ($numframes frames at $framerate fps)" "Based on input file '${input_file}', captured $numframes frames with delay $delay ms."
+# Get the file name without the path of the output file
+output_file_basename=$(basename "$output_file")
+
+generate_html "${html_file}" "${output_file_basename}" "Displaying file '${output_file_basename}' ($numframes frames at $framerate fps)" "Based on input file '${input_file}', captured $numframes frames with delay $delay ms."
 
 
 
