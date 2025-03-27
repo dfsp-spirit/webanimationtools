@@ -32,7 +32,7 @@ Have your svg file ready and run the `run.bash` wrapper script to carry out the 
 ./run.bash --outputfile out.png input.svg
 ```
 
-Run `./run.bash --help` to see available options for changing screenshot capture rate and dealy, as well as output frames per second for the APNG file. You **will** need to tweak those depending on the length of the animation to get good results.
+Run `./run.bash --help` to see available options for changing screenshot capture rate and dealy, as well as output frames per second for the APNG file. You **will** need to tweak those depending on the length of the animation to get good results. The help command shows various explained example command lines.
 
 
 ### Manually running the sub scripts
