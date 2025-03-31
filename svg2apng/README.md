@@ -16,7 +16,7 @@ The software in this repo can be used under Linux and MacOS, and with a bit of a
 
 ## Installation
 
-* Make sure you have `npm` installed, if not get the LTS from the [node website](https://nodejs.org/) or from your package manager on a recent distribution. I used v10.9.2.
+* Make sure you have `npm` installed, if not get the LTS from the [node website](https://nodejs.org/), from your package manager on a recent Linux distribution, or via [nvm](https://github.com/nvm-sh/nvm) under Linux. I used v10.9.2.
 * Make sure you have `ffmpeg` installed and on your PATH.
    - Under Linux you most likely already have it, otherwise install from your package manager (Debian/Ubuntu `sudo apt install ffmpeg`).
    - Under Windows you could use chocolate to install it, or manually install a Windows build from the [ffmpeg website](https://www.ffmpeg.org/).
