@@ -60,11 +60,14 @@ function processSvgFile(inputPath, colorMap, outputSuffix = '_modified') {
 
 // Main execution
 if (require.main === module) {
+    const fs = require('fs');
     const args = process.argv.slice(2);
 
     if (args.length < 1 || args[0] === '--help') {
-        console.log('Usage: node svgColorReplacer.js <input-file> [color-map-json] [output-suffix]');
-        console.log('Example: node svgColorReplacer.js input.svg \'{"#ff0000":"#00ff00"}\' _red');
+        console.log('Usage: node svgColorReplacer.js <input-file> [color-map-json|--file <file.json>] [output-suffix]');
+        console.log('Examples:');
+        console.log('  node svgColorReplacer.js input.svg \'{"#ff0000":"#00ff00"}\' _red');
+        console.log('  node svgColorReplacer.js input.svg --file colors.json _red');
         process.exit(0);
     }
 
@@ -72,7 +75,25 @@ if (require.main === module) {
     let colorMap = DEFAULT_COLOR_MAP;
     let outputSuffix = '_modified';
 
-    if (args[1]) {
+    // Check for --file option
+    const fileArgIndex = args.indexOf('--file');
+    if (fileArgIndex !== -1) {
+        // Read color map from file
+        if (fileArgIndex + 1 >= args.length) {
+            console.error('Error: --file option requires a filename');
+            process.exit(1);
+        }
+        
+        const colorMapFile = args[fileArgIndex + 1];
+        try {
+            const fileContent = fs.readFileSync(colorMapFile, 'utf8');
+            colorMap = JSON.parse(fileContent);
+        } catch (e) {
+            console.error(`Error reading or parsing color map file: ${e.message}`);
+            process.exit(1);
+        }
+    } else if (args[1] && !args[1].startsWith('--')) {
+        // Parse color map from command line argument
         try {
             colorMap = JSON.parse(args[1]);
         } catch (e) {
@@ -80,10 +101,14 @@ if (require.main === module) {
         }
     }
 
-    if (args[2]) {
-        outputSuffix = args[2];
+    // Get output suffix (skip the file args if they were used)
+    const suffixArgIndex = fileArgIndex !== -1 ? fileArgIndex + 2 : 2;
+    if (args[suffixArgIndex]) {
+        outputSuffix = args[suffixArgIndex];
     }
 
+    console.log(`Processing input file '${inputPath}' and adding output suffix '${outputSuffix}' to output file.`)
+    console.log(`Using color map: ${JSON.stringify(colorMap, null, 2)}`)
     processSvgFile(inputPath, colorMap, outputSuffix);
 }
 
