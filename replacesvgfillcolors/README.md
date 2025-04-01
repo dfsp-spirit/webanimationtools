@@ -6,12 +6,12 @@ A color replacement mapping is a JSON dictionary like the following one:
 
 ```
 {
-  'rgb(124, 190, 178)': 'rgb(124, 190, 178)',
-  'rgb(148, 167, 203)': 'rgb(148, 167, 203)',
-  'rgb(217, 167, 81)': 'rgb(217, 167, 81)',
-  white: 'white',
-  black: 'black',
-  gray: 'gray'
+    "rgb(124, 190, 178)": "#267365",
+    "rgb(148, 167, 203)": "#F29F05",
+    "rgb(217, 167, 81)": "#F2CB05",
+    "white": "white",
+    "black": "black",
+    "gray": "gray"
 }
 ```
 
@@ -31,7 +31,7 @@ Get all fill colors from your existing SVG file, so you can have a template for 
 node get_svg_fillcolors.js myimage.svg > colormapping.json
 ```
 
-Now edit the file `colormapping.json` with your color mapping. Find a new color schema with websites like Adobe Color/Kooler/whatever you prefer. Then, apply your mapping:
+Now edit the file `colormapping.json` with your color mapping. Find a new color schema with websites like Adobe Color/Kuler/Coolors or however you prefer. Then, apply your mapping:
 
 ```shell
 node replace_svg_fillcolors.js myimage.svg --file colormapping.json
@@ -39,4 +39,10 @@ node replace_svg_fillcolors.js myimage.svg --file colormapping.json
 
 This will write the modified (re-colored) file to `myimage_modified.svg`
 
+
+#### Testing the script with provided demo input files
+
+```shell
+node replace_svg_fillcolors.js demo_input_images/robot_standing.svg --file demo_input_images/robotcolormap.json
+```
 

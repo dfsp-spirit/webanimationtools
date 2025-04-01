@@ -97,5 +97,5 @@ if (require.main === module) {
         process.exit(1);
     }
 
-    extractFillColors(inputPath, normalizeColors).then(colors => console.log(colors));
+    extractFillColors(inputPath, normalizeColors).then(colors => console.log(JSON.stringify(colors, null, 2)));
 }
