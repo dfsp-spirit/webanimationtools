@@ -1,5 +1,11 @@
+/*
+ * Script to extract all fill colors from an SVG file.
+ * Writes the colors as a JSON dict to stdout. For each detected color, the dict contains a key/value pair, and both entries (key AND value) contain the detected color string.
+ * This output format can be piped to a file and used as a template for the color replacement mapping required by the `replace_svg_fillcolors.js` script.
+ */
+
 const fs = require('fs');
-const { parseString } = require('xml2js'); // Install with: npm install xml2js
+const { parseString } = require('xml2js'); // Install with: npm install xml2js, or run 'npm ci' in directory.
 
 async function extractFillColors(svgFilePath, normalizeColors) {
   try {
@@ -46,7 +52,7 @@ async function extractFillColors(svgFilePath, normalizeColors) {
   }
 }
 
-// Helper function to validate colors (basic check)
+// Helper function to validate colors (basic check to ignore certain special values)
 function isValidColor(color) {
   return color !== 'none' && color !== 'currentColor' && 
          !color.startsWith('url(') && color !== 'inherit' && color !== 'freeze';
