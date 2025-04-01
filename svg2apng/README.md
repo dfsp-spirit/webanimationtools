@@ -1,4 +1,4 @@
-# Graphics -- Creating an animated PNG image from an animated SVG
+# svg2apng -- Create an animated PNG image from an animated SVG
 
 
 ![Animated Robot in PNG format](../images/robot_a.png)
