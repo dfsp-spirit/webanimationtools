@@ -67,6 +67,7 @@ if (require.main === module) {
         console.log('Usage: node svgColorReplacer.js <input-file> [color-map-json|--file <file.json>] [output-suffix]');
         console.log('Examples:');
         console.log('  node svgColorReplacer.js input.svg \'{"#ff0000":"#00ff00"}\' _red');
+        console.log('  node svgColorReplacer.js input.svg --file colors.json');
         console.log('  node svgColorReplacer.js input.svg --file colors.json _red');
         process.exit(0);
     }
