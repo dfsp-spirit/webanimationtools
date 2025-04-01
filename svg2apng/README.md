@@ -54,3 +54,21 @@ The ffmpeg script creates an output file named `animated.png` by default (if `--
 Note: Software like MS Paint that does not support APNG will not display the animation, and typically shows only the first frame.
 
 
+### Troubleshooting
+
+If you run the `anim_svg_to_ong_frames.js` script, directly or via `run.bash`, and get an error message like this under a recent Linux distro (Ubuntu 23.xy):
+
+```
+Error: Failed to launch the browser process!
+[87702:87702:0401/142409.143882:FATAL:zygote_host_impl_linux.cc(132)] No usable sandbox! If you are running on Ubuntu 23.10+ or another Linux distro that has disabled unprivileged user namespaces with AppArmor, see https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md. Otherwise see https://chromium.googlesource.com/chromium/src/+/main/docs/linux/suid_sandbox_development.md for more information on developing with the (older) SUID sandbox. If you want to live dangerously and need an immediate workaround, you can try using --no-sandbox.
+```
+
+Then follow the link, or if you have Google Chrome installed from Google's deb (as opposed to the Ubuntu snap), simply do:
+
+```
+export CHROME_DEVEL_SANDBOX=/opt/google/chrome/chrome-sandbox
+```
+
+You can persist this across reboots/terminals by adding it in your `~/.bashrc`.
+
+
