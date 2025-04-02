@@ -69,10 +69,10 @@ if (require.main === module) {
         console.log('  <color-map-json> : The JSON color replacement dict as a string, properly shielded from shell expansion of special characters by quoting (single ticks for most shells). Example: \'{"#ff0000":"#00ff00","blue":"red"}\'')
         console.log('  <output-suffix>  : Optional. A suffix to append to the input file basename to construct the output file name. E.g., with input file \'robot.svg\' and suffix \'_red\', you will get output file \'robot_red.svg\'. Defaults to \'_recolored\'.');
         console.log('Examples:');
-        console.log('  node svgColorReplacer.js input.svg \'{"#ff0000":"#00ff00","blue":"red"}\' _red');
+        console.log('  node svgColorReplacer.js input.svg \'{"#00ff00":"#ff0000","blue":"red"}\' _red');
         console.log('  node svgColorReplacer.js input.svg --file colors.json');
         console.log('  node svgColorReplacer.js input.svg --file colors.json _red');
-        console.log('If you supply the color mapping via --file, the contents of that file should be just a single JSON dict like: \'{"#ff0000":"#00ff00","blue":"red"}\'')
+        console.log('If you supply the color mapping via --file, the contents of that file should be just a single JSON dict like: \'{"#00ff00":"#ff0000","blue":"red"}\'')
         console.log()
         process.exit(0);
     }
