@@ -26,7 +26,7 @@ show_help() {
     echo "* --framerate: The number of frames per second in the output animation. Positive integer, defaults to 10."
     echo "* --outputfile: The name of the output APNG file. Defaults to 'animated.png'."
     echo "* --inputdir: The directory containing the input PNG frames. Defaults to the current directory. Frames must be named 'frame_001.png', 'frame_002.png', etc. (You can start with index 000 or 001.)"
-    echo "* --inputfileprefix <prefix>: set input files prefix to <prefix>. Note that the suffix '%3d.png' will be appended to look for input files. If omitted, defaults to 'frames_'."
+    echo "* --inputfileprefix <prefix>: set input files prefix to <prefix>. Note that the suffix '%3d.png' will be appended to look for input files. If omitted, defaults to 'frame_'."
     echo "* --help: Show this help message."
     echo "Example: $0 --framerate 10 --output animation_out.png --inputdir ./frames_tmp"
     exit
