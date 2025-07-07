@@ -137,6 +137,10 @@ rm -f ./frames_tmp/frame_*.png
 # Convert the animated SVG to a sequence of PNG frames
 node anim_svg_to_png_frames.js --numframes $numframes --delay $delay --svgfile "$input_file" --outputdir "./frames_tmp"
 ./png_frames_to_apng.bash --framerate $framerate --outputfile "${output_file}" --inputdir "./frames_tmp"
+if [ $? -ne 0 ]; then
+    echo "Error: Running 'png_frames_to_apng.bash' failed. See error messages above. Exiting." >&2
+    exit 1
+fi
 rm -rf ./frames_tmp/frame_*.png
 
 
