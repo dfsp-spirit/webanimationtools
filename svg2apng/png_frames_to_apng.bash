@@ -14,7 +14,7 @@ fi
 # Default values
 framerate=10
 output_file="animated.png"
-input_dir="./frames_tmp"
+input_dir="./"
 input_file_prefix="frame_"
 
 # Function to display help message
@@ -25,10 +25,10 @@ show_help() {
     echo "This script requires ffmpeg to be installed and available on the system path."
     echo "* --framerate: The number of frames per second in the output animation. Positive integer, defaults to 10."
     echo "* --outputfile: The name of the output APNG file. Defaults to 'animated.png'."
-    echo "* --inputdir: The directory containing the input PNG frames. Defaults to the current directory. Frames must be named 'frame_001.png', 'frame_002.png', etc. (You can start with index 000 or 001.)"
-    echo "* --inputfileprefix <prefix>: set input files prefix to <prefix>. Note that the suffix '%3d.png' will be appended to look for input files. If omitted, defaults to 'frame_'."
+    echo "* --inputdir: The directory containing the input PNG frames. Defaults to the current directory. Unless you also set --inputfileprefix, the prefix defaults to 'frame_', so the frames in the directory must be named 'frame_001.png', 'frame_002.png', etc. (You can start with index 000 or 001.)"
+    echo "* --inputfileprefix <prefix>: set input files prefix to <prefix>. The suffix '%3d.png' will be appended to look for the set of input files. If omitted, defaults to 'frame_'."
     echo "* --help: Show this help message."
-    echo "Example: $0 --framerate 10 --output animation_out.png --inputdir ./frames_tmp"
+    echo "Example: $0 --framerate 10 --outputfile animation_out.png --inputdir ./frames_tmp"
     exit
 }
 
