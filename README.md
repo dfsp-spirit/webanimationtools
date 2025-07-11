@@ -16,10 +16,18 @@ See the README file of the different tools for details and installation instruct
 This way of installing uses [nvm](https://github.com/nvm-sh), the node version manager.
 
 ```shell
-sudo apt install curl ffmpeg
+sudo apt install curl ffmpeg git
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 bash # start a new shell so that your config files, modified by above command, get re-evaluated.
 nvm install node # or some specific version you prefer, the nvm docs.
 ```
 
-Then, in the directories of the respective tool you want to use, run ```npm ci``` and read the README file in the tool directory for usage instructions.
+Then, in the directories of the respective tool you want to use, run ```npm ci``` and read the README file in the tool directory for usage instructions. E.g.:
+
+```shell
+git clone https://github.com/dfsp-spirit/webanimationtools.git
+cd webanimationtools/svg2apng/
+npm ci
+```
+
+
