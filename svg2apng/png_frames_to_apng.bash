@@ -32,7 +32,8 @@ show_help() {
     echo "* --inputfileprefix <prefix>: set input files prefix to <prefix>. The default suffix '%3d.png' will be appended to look for the set of input files, unless --inputfilesuffix is also given. If omitted, defaults to 'frame_'. See also --inputfilepattern as an alternative way to set both prefix and suffix at once."
     echo "* --inputfilesuffix <suffix>: set input files suffix to <suffix>. Defaults to '%3d.png'. The default prefix 'frame_' will be prepended, unles --inputfileprefix is also given. If omitted, defaults to '%3d.png'. See also --inputfilepattern as an alternative way to set both prefix and suffix at once."
     echo "* --help: Show this help message."
-    echo "Example: $0 --framerate 10 --outputfile animation_out.png --inputdir ./frames_tmp"
+    echo "Example 1: $0 --framerate 10 --outputfile animation_out.png --inputdir ./frames_tmp"
+    echo "Example 2: $0 --framerate 10 --outputfile bird_flying_anim.png --inputdir . --inputfilepattern 'bird_flight_frame_%2d.png'"
     exit
 }
 
@@ -99,5 +100,12 @@ fi
 echo "Input file pattern: ${input_file_pattern}"
 
 echo "Converting frames in directory '${input_dir}' to output file '${output_file}' with framerate ${framerate}..."
-ffmpeg -y -framerate $framerate -i "${input_dir}/${input_file_pattern}" -plays 0 -vf "fps=${framerate}" -f apng "${output_file}"
-echo "Conversion complete. Check output file, e.g. run: 'firefox ${output_file}'"
+
+if ! ffmpeg -y -framerate "$framerate" -i "${input_dir}/${input_file_pattern}" -plays 0 -vf "fps=${framerate}" -f apng "${output_file}"; then
+    echo "ERROR: ffmpeg conversion failed, check output above for details." >&2
+    exit 1
+else
+    echo "Conversion complete. Check the output file, e.g. run: 'firefox ${output_file}'"
+fi
+
+exit 0
