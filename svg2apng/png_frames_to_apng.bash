@@ -3,10 +3,14 @@
 # Use ffmpeg to convert a sequence of PNG frames to an animated PNG (APNG) file.
 #
 
+APPTAG="[png2apng]"
+
+echo "$APPTAG === Convert PNG frames to an animated APNG image ==="
+
 # Check if ffmpeg is installed
 if ! command -v ffmpeg &> /dev/null
 then
-    echo "ffmpeg could not be found, please install it."
+    echo "$APPTAG ERROR:ffmpeg could not be found, please install it."
     exit
 fi
 
@@ -32,13 +36,13 @@ show_help() {
     echo "* --inputfileprefix <prefix>: set input files prefix to <prefix>. The default suffix '%3d.png' will be appended to look for the set of input files, unless --inputfilesuffix is also given. If omitted, defaults to 'frame_'. See also --inputfilepattern as an alternative way to set both prefix and suffix at once."
     echo "* --inputfilesuffix <suffix>: set input files suffix to <suffix>. Defaults to '%3d.png'. The default prefix 'frame_' will be prepended, unles --inputfileprefix is also given. If omitted, defaults to '%3d.png'. See also --inputfilepattern as an alternative way to set both prefix and suffix at once."
     echo "* --help: Show this help message."
-    echo "Example 1: $0 --framerate 10 --outputfile animation_out.png --inputdir ./frames_tmp"
-    echo "Example 2: $0 --framerate 10 --outputfile bird_flying_anim.png --inputdir . --inputfilepattern 'bird_flight_frame_%2d.png'"
+    echo "Example 1: $0 --framerate 10 --outputfile animation_out.png --inputdir ./frames_tmp/"
+    echo "Example 2: $0 --framerate 10 --outputfile bird_flying_anim.png --inputfilepattern 'bird_flight_frame_%2d.png'"
     exit
 }
 
 if [ -z "$1" ]; then
-    echo "No arguments provided. Use --help to see usage."
+    echo "$APPTAG ERROR: No arguments provided. Use --help to see usage."
     exit 1
 fi
 
@@ -50,7 +54,7 @@ while [[ "$#" -gt 0 ]]; do
                 framerate="$2"
                 shift
             else
-                echo "Error: The frame rate must be a positive integer."
+                echo "$APPTAG ERROR: The frame rate must be a positive integer."
                 exit 1
             fi
             ;;
@@ -78,34 +82,49 @@ while [[ "$#" -gt 0 ]]; do
             show_help
             ;;
         *)
-            echo "Unknown parameter: $1"
+            echo "$APPTAG ERROR: Unknown parameter: $1"
             show_help
             ;;
     esac
     shift
 done
 
+echo "$APPTAG Parsing arguments completed."
+echo "$APPTAG ---------- Settings ----------"
 # Print the parsed arguments for debugging
-echo "Frame rate: $framerate"
-echo "Output file: $output_file"
-echo "Input directory: $input_dir"
+echo "$APPTAG Frame rate: $framerate"
+echo "$APPTAG Output file: $output_file"
+echo "$APPTAG Input directory: $input_dir"
 
 # If --inputfilepattern is not set, construct the input file pattern from prefix and suffix.
 if [ -z "$input_file_pattern" ]; then
-    echo "Input file prefix: $input_file_prefix"
-    echo "Input file suffix: $input_file_suffix"
+    echo "$APPTAG Input file prefix: $input_file_prefix"
+    echo "$APPTAG Input file suffix: $input_file_suffix"
     input_file_pattern="${input_dir}/${input_file_prefix}{$input_file_suffix}"
 fi
 
-echo "Input file pattern: ${input_file_pattern}"
+echo "$APPTAG Input file pattern: ${input_file_pattern}"
+echo "$APPTAG ---------- End of Settings ----------"
 
-echo "Converting frames in directory '${input_dir}' to output file '${output_file}' with framerate ${framerate}..."
+# Error if input directory does not exist
+if [ ! -d "$input_dir" ]; then
+    echo "$APPTAG ERROR: Input directory '${input_dir}' does not exist. Exiting." >&2
+    exit 1
+fi
+
+# Warn if input_file_pattern does not contain a '%' character, which is required for ffmpeg to recognize it as a pattern.
+if [[ ! "$input_file_pattern" =~ % ]]; then
+    echo "$APPTAG WARNING: The input file pattern '${input_file_pattern}' does not contain a '%' character. This may cause ffmpeg to not recognize it as a pattern, and only look for a single file." >&2
+fi
+
+
+echo "$APPTAG Converting frames in directory '${input_dir}' to output file '${output_file}' with framerate ${framerate}..."
 
 if ! ffmpeg -y -framerate "$framerate" -i "${input_dir}/${input_file_pattern}" -plays 0 -vf "fps=${framerate}" -f apng "${output_file}"; then
-    echo "ERROR: ffmpeg conversion failed, check output above for details." >&2
+    echo "$APPTAG ERROR: ffmpeg conversion failed, check output above for details." >&2
     exit 1
 else
-    echo "Conversion complete. Check the output file, e.g. run: 'firefox ${output_file}'"
+    echo "$APPTAG Conversion complete. Check the output file, e.g. run: 'firefox ${output_file}'"
 fi
 
 exit 0
