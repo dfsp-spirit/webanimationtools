@@ -44,4 +44,8 @@ npm ci
 
 Now read the README file in the tool directory for usage instructions.
 
+## Related software
+
+* [apngasm](https://github.com/apngasm/apngasm)
+
 
